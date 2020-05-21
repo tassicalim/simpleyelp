@@ -27,8 +27,12 @@ class RestaurantsAdapter(val context: Context, val restaurants: List<YelpRestaur
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(restaurant: YelpRestaurant) {
+
+            val image = if (restaurant.rating % 0.5 == 0.0) "stars_small_${(restaurant.rating - 0.5).toInt()}_half" else
+                "stars_small_${restaurant.rating.toInt()}"
+            itemView.ivStars.setImageResource(context.getResources().getIdentifier(image, "drawable", context.getPackageName()))
+
             itemView.tvName.text = restaurant.name
-            itemView.ratingBar.rating = restaurant.rating.toFloat()
             itemView.tvNumReviews.text = "${restaurant.numReviews} Reviews"
             itemView.tvAddress.text = restaurant.location.address
             itemView.tvCategory.text = restaurant.categories[0].title
